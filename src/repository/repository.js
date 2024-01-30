@@ -13,11 +13,12 @@ async function getTaskByIdDB(_id) {
 }
 
 async function updateTaskDB(_id, task) {
-  return await Table.updateOne({ _id: new ObjectId(_id) }, { $set: task });
+  await Table.updateOne({ _id: new ObjectId(_id) }, { $set: task });
+  return await Table.find({ _id: new ObjectId(_id) });
 }
 
 async function deleteTaskDB(_id) {
-  return await Table.deleteOne({ _id: new ObjectId(_id) });
+  return await Table.findByIdAndDelete({ _id: new ObjectId(_id) });
 }
 
 module.exports = { createTaskDB, getTaskDB, getTaskByIdDB, updateTaskDB, deleteTaskDB };

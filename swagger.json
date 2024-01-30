@@ -1,1 +1,189 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ToDo-RestApi",
+    "version": "1.0.0",
+    "description": "CRUD requests for tasks"
+  },
+  "paths": {
+    "/task": {
+      "get": {
+        "tags": ["TASK"],
+        "summary": "get all tasks",
+        "description": "get all tasks from the tasks table",
+        "responses": {
+          "200": {
+            "description": "A successful response takes the form of:",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "65b7cedfc68eb84df4cc7581",
+                    "title": "JS",
+                    "description": "test1",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "404": {}
+        }
+      },
 
+      "post": {
+        "tags": ["TASK"],
+        "summary": "create new task",
+        "description": "create a new task in the task table",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A successful response takes the form of:",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "title": "JS",
+                    "description": "test1",
+                    "_id": "65b7cedfc68eb84df4cc7581",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "404": {}
+        }
+      }
+    },
+
+    "/task/{_id}": {
+      "get": {
+        "tags": ["TASK"],
+        "summary": "get task by id",
+        "description": "get a task by id from the task table",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response takes the form of:",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "65b7cedfc68eb84df4cc7581",
+                    "title": "JS",
+                    "description": "test1",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "404": {}
+        }
+      },
+
+      "put": {
+        "tags": ["TASK"],
+        "summary": "update task",
+        "description": "update task by id in the task table",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A successful response takes the form of:",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "65b7cedfc68eb84df4cc7581",
+                    "title": "JS",
+                    "description": "test1",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "404": {}
+        }
+      },
+
+      "delete": {
+        "tags": ["TASK"],
+        "summary": "delete task by id",
+        "description": "delete a task by id from the task table",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response takes the form of:",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "65b7cedfc68eb84df4cc7581",
+                    "title": "JS",
+                    "description": "test1",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "404": {}
+        }
+      }
+    }
+  }
+}
