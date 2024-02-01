@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 500 20px Kanit;
+  font-style: normal;
+}
+
+input {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
