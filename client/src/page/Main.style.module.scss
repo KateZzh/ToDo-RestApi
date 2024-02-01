@@ -1,17 +1,32 @@
+$purple_color: #6c63ff;
+$dark_purple_color: #564ef1;
+$white_color: #f7f7f7;
+$light_purple_color: #c3c1e5;
+$black_color: #252525;
+
+@mixin inp_btn($border, $border_radius, $padding) {
+  border: $border;
+  border-radius: $border_radius;
+  padding: $padding;
+}
+
+@mixin for_wrapper($margin, $max-with, $text-align) {
+  margin: $margin;
+  max-width: $max-with;
+  text-align: $text-align;
+}
+
 .container {
-  width: 100%;
   padding: 0 10px;
 
   .createWrapper {
-    margin: 40px auto 0;
-    max-width: 750px;
+    @include for_wrapper(40px auto 0, 750px, center);
     display: flex;
     flex-direction: column;
 
     h1 {
-      text-align: center;
       font-size: 26px;
-      color: #252525;
+      color: $black_color;
       padding-bottom: 18px;
     }
 
@@ -21,9 +36,7 @@
       gap: 5px;
 
       input {
-        border: 1px solid #6c63ff;
-        border-radius: 5px;
-        padding: 8px 10px;
+        @include inp_btn(1px solid $purple_color, 5px, 8px 10px);
         font: 500 16px Inter;
         width: 100%;
 
@@ -36,18 +49,17 @@
         }
 
         &::placeholder {
-          color: #c3c1e5;
+          color: $light_purple_color;
         }
       }
 
       button {
-        border: 1px solid #6c63ff;
-        border-radius: 5px;
-        color: #f7f7f7;
+        @include inp_btn(1px solid $purple_color, 5px, 8px 10px);
+        color: $white_color;
         text-transform: uppercase;
-        background-color: #6c63ff;
+        background-color: $purple_color;
         width: 84px;
-        height: 38px;
+
         font: 500 18px Kanit;
 
         &:hover {
@@ -56,16 +68,14 @@
         }
 
         &:active {
-          background-color: #564ef1;
+          background-color: $dark_purple_color;
         }
       }
     }
   }
 
   .emptyWrapper {
-    margin: 40px auto 0;
-    max-width: 750px;
-    text-align: center;
+    @include for_wrapper(40px auto 0, 750px, center);
 
     p {
       padding-top: 20px;
