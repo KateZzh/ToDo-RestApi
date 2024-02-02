@@ -16,13 +16,25 @@ $black_color: #252525;
   text-align: $text-align;
 }
 
+@mixin for_img($height, $width) {
+  height: $height;
+  width: $width;
+}
+
+@mixin flex($flex-direction, $justify-content, $align-items, $gap) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  gap: $gap;
+}
+
 .container {
   padding: 0 10px;
 
   .createWrapper {
     @include for_wrapper(40px auto 0, 750px, center);
-    display: flex;
-    flex-direction: column;
+    @include flex(column, 0, 0, 0);
 
     h1 {
       font-size: 26px;
@@ -31,9 +43,7 @@ $black_color: #252525;
     }
 
     .createNoteWrapper {
-      display: flex;
-      justify-content: space-between;
-      gap: 5px;
+      @include flex(row, space-between, 0, 5px);
 
       input {
         @include inp_btn(1px solid $purple_color, 5px, 8px 10px);
@@ -79,6 +89,53 @@ $black_color: #252525;
 
     p {
       padding-top: 20px;
+    }
+  }
+
+  .existingNotesWrapper {
+    @include for_wrapper(40px auto 0, 520px, left);
+
+    .generalNoteWrapper {
+      @include flex(row, space-between, 0, 0);
+
+      .noteWrapper {
+        @include flex(row, 0, center, 15px);
+
+        .checkMarkImg {
+          @include for_img(26px, 26px);
+        }
+
+        .noteTitle {
+          width: 85px;
+          text-transform: uppercase;
+          text-decoration: line-through;
+          color: black;
+          opacity: 50%;
+        }
+
+        .noteDescription {
+          width: 300px;
+          color: $light_purple_color;
+        }
+      }
+
+      .iconsNoteWrapper {
+        @include flex(row, 0, center, 10px);
+
+        .pencilImg {
+          @include for_img(13px, 13px);
+        }
+
+        .garbageCanImg {
+          @include for_img(18px, 18px);
+        }
+      }
+    }
+
+    .line {
+      border: 1px solid $purple_color;
+      margin: 12px 0;
+      opacity: 50%;
     }
   }
 }
