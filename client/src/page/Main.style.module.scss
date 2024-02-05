@@ -93,7 +93,7 @@ $black_color: #252525;
   }
 
   .existingNotesWrapper {
-    @include for_wrapper(40px auto 0, 520px, left);
+    @include for_wrapper(20px auto 0, 520px, left);
 
     .generalNoteWrapper {
       @include flex(row, space-between, 0, 0);
