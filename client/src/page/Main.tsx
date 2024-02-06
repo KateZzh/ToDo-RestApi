@@ -5,20 +5,15 @@ import checkMarkEmptyImg from '../assets/checkMarkEmpty.svg';
 import pencilImg from '../assets/pencil.svg';
 import garbageCanImg from '../assets/garbageCan.svg';
 import { useState } from 'react';
-import axios from 'axios';
 import useRequestData from '../hooks/useRequestData';
 
 export default function Main() {
   const [inp, setInp] = useState({ title: '', description: '' });
-  const getData = useRequestData('http://localhost:3000/task/', 'get', null);
+  // const [inpUpdate, setInpUpdate] = useState({ title: '', description: '' });
+  const { responseData, createData, deleteData } = useRequestData('http://localhost:3000/task/');
 
   function fillInputs(e) {
     setInp({ ...inp, [e.target.name]: e.target.value });
-  }
-
-  async function createNote() {
-    const { data } = await axios.post('http://localhost:3000/task/', inp);
-    setInp({ title: '', description: '' });
   }
 
   return (
@@ -29,7 +24,7 @@ export default function Main() {
         <div className={style.createNoteWrapper}>
           <input type='text' placeholder='Create note...' name='title' value={inp.title} onChange={fillInputs} />
           <input type='text' placeholder='Create description note...' name='description' value={inp.description} onChange={fillInputs} />
-          <button onClick={createNote}>create</button>
+          <button onClick={() => createData(inp)}>create</button>
         </div>
       </div>
 
@@ -38,8 +33,8 @@ export default function Main() {
         <p>Empty...</p>
       </div> */}
 
-      {getData.responseData.map((el, i) => (
-        <div className={style.existingNotesWrapper} key={i}>
+      {responseData.map((el) => (
+        <div className={style.existingNotesWrapper} key={el._id}>
           <div className={style.generalNoteWrapper}>
             <div className={style.noteWrapper}>
               <img className={style.checkMarkImg} src={checkMarkEmptyImg} alt='checkMarkImg' />
@@ -49,7 +44,7 @@ export default function Main() {
 
             <div className={style.iconsNoteWrapper}>
               <img className={style.pencilImg} src={pencilImg} alt='pencilImg' />
-              <img className={style.garbageCanImg} src={garbageCanImg} alt='garbageCanImg' />
+              <img className={style.garbageCanImg} src={garbageCanImg} alt='garbageCanImg' onClick={() => deleteData(el._id)}/>
             </div>
           </div>
 

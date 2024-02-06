@@ -19,6 +19,10 @@ $black_color: #252525;
 @mixin for_img($height, $width) {
   height: $height;
   width: $width;
+  
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @mixin flex($flex-direction, $justify-content, $align-items, $gap) {

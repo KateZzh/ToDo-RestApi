@@ -1,6 +1,7 @@
 const { createTaskDB, getTaskDB, getTaskByIdDB, updateTaskDB, deleteTaskDB } = require('../repository/repository');
 
 async function createTask(task) {
+  if (!task.title || !task.description) throw new Error('title and description require');
   return await createTaskDB(task);
 }
 
