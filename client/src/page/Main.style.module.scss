@@ -19,7 +19,7 @@ $black_color: #252525;
 @mixin for_img($height, $width) {
   height: $height;
   width: $width;
-  
+
   &:hover {
     cursor: pointer;
   }
@@ -37,7 +37,7 @@ $black_color: #252525;
   padding: 0 10px;
 
   .createWrapper {
-    @include for_wrapper(40px auto 0, 750px, center);
+    @include for_wrapper(40px auto, 750px, center);
     @include flex(column, 0, 0, 0);
 
     h1 {
@@ -97,7 +97,7 @@ $black_color: #252525;
   }
 
   .existingNotesWrapper {
-    @include for_wrapper(20px auto 0, 520px, left);
+    @include for_wrapper(15px auto 0, 520px, left);
 
     .generalNoteWrapper {
       @include flex(row, space-between, 0, 0);
@@ -110,6 +110,12 @@ $black_color: #252525;
         }
 
         .noteTitle {
+          width: 85px;
+          text-transform: uppercase;
+          color: black;
+        }
+
+        .noteCompleteTitle {
           width: 85px;
           text-transform: uppercase;
           text-decoration: line-through;
@@ -128,17 +134,25 @@ $black_color: #252525;
 
         .pencilImg {
           @include for_img(13px, 13px);
+
+          &:hover {
+            content: url('../assets/pencilPurple.svg');
+          }
         }
 
         .garbageCanImg {
           @include for_img(18px, 18px);
+
+          &:hover {
+            content: url('../assets/garbageCanPurple.svg');
+          }
         }
       }
     }
 
     .line {
       border: 1px solid $purple_color;
-      margin: 12px 0;
+      margin: 15px 0;
       opacity: 50%;
     }
   }

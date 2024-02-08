@@ -6,6 +6,7 @@ mongoose.connect(process.env.MONGODB);
 const Table = mongoose.model('tasks', {
   title: String,
   description: String,
+  completedTask: Boolean,
 });
 
 const ObjectId = mongoose.Types.ObjectId;
