@@ -6,26 +6,27 @@ import pencilImg from '../assets/pencil.svg';
 import garbageCanImg from '../assets/garbageCan.svg';
 import { useState } from 'react';
 import useRequestData from '../hooks/useRequestData';
+import { iTasks } from '../interfaces';
 
 export default function Main() {
   const [inp, setInp] = useState({ title: '', description: '', completedTask: false });
-  const { responseData, createData, deleteData, updateData, getByIdData, responseDataById, setResponseDataById } =
+  const { responseGetData, createData, deleteData, updateData, getByIdData, responseDataById, setResponseDataById } =
     useRequestData('http://localhost:3000/task/');
 
-  function fillInputs(e) {
+  function fillInputs(e: React.ChangeEvent<HTMLInputElement>) {
     setInp({ ...inp, [e.target.name]: e.target.value });
   }
 
   function doCreateData() {
     createData(inp);
-    setInp({ title: '', description: '' });
+    setInp({ title: '', description: '', completedTask: false });
   }
 
-  function doUpdateData(e) {
+  function doUpdateData(e: React.ChangeEvent<HTMLInputElement>) {
     setResponseDataById({ ...responseDataById, [e.target.name]: e.target.value });
   }
 
-  function doCompleteTask(_id, flag) {
+  function doCompleteTask(_id: string, flag: boolean) {
     updateData(_id, { completedTask: !flag });
   }
 
@@ -41,8 +42,8 @@ export default function Main() {
         </div>
       </div>
 
-      {responseData.length !== 0 ? (
-        responseData.map((el) => (
+      {responseGetData.responseData.length ? (
+        responseGetData.responseData.map((el: iTasks) => (
           <div className={style.existingNotesWrapper} key={el._id}>
             <div className={style.generalNoteWrapper}>
               <div className={style.noteWrapper}>
