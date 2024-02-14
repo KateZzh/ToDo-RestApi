@@ -1,0 +1,108 @@
+$purple_color: #6c63ff;
+$dark_purple_color: #564ef1;
+$white_color: #f7f7f7;
+$light_purple_color: #c3c1e5;
+$black_color: #252525;
+
+@mixin inp_btn($border, $border_radius, $padding) {
+  border: $border;
+  border-radius: $border_radius;
+  padding: $padding;
+}
+
+@mixin for_wrapper($margin, $max-with, $text-align) {
+  margin: $margin;
+  max-width: $max-with;
+  text-align: $text-align;
+}
+
+@mixin for_img($height, $width) {
+  height: $height;
+  width: $width;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin flex($flex-direction, $justify-content, $align-items, $gap) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  gap: $gap;
+}
+
+.container {
+  background-color: rgba($color: #252525, $alpha: 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .updateWrapper {
+    @include for_wrapper(40px auto, 750px, center);
+    // @include flex(column, 0, 0, 0);
+    max-width: 500px;
+    height: 289px;
+    background-color: $white_color;
+    width: 100%;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px 20px;
+    position: relative;
+
+    h1 {
+      font-size: 26px;
+      color: $black_color;
+      padding-bottom: 18px;
+    }
+
+    .updateNoteWrapper {
+      @include flex(column, center, center, 10px);
+
+      input {
+        @include inp_btn(1px solid $purple_color, 5px, 8px 10px);
+        font: 500 16px Inter;
+        width: 100%;
+
+        &::placeholder {
+          color: $light_purple_color;
+        }
+      }
+
+      .buttonsWrapper {
+        // @include flex(row, , center, 5px);
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        width: 100%;
+
+        button {
+          @include inp_btn(1px solid $purple_color, 5px, 8px 10px);
+          color: $white_color;
+          text-transform: uppercase;
+          background-color: $purple_color;
+          width: 84px;
+
+          font: 500 18px Kanit;
+
+          &:hover {
+            transform: 0.5s;
+            opacity: 90%;
+          }
+
+          &:active {
+            background-color: $dark_purple_color;
+          }
+        }
+      }
+    }
+  }
+}

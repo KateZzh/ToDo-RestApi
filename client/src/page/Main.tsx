@@ -7,9 +7,12 @@ import garbageCanImg from '../assets/garbageCan.svg';
 import { useState } from 'react';
 import useRequestData from '../hooks/useRequestData';
 import { iTasks } from '../interfaces';
+import Modal from '../components/Modal/Modal';
 
 export default function Main() {
   const [inp, setInp] = useState({ title: '', description: '', completedTask: false });
+  const [openModal, setOpenModal] = useState(false);
+
   const { responseGetData, createData, deleteData, updateData, getByIdData, responseDataById, setResponseDataById } =
     useRequestData('http://localhost:3000/task/');
 
@@ -22,12 +25,13 @@ export default function Main() {
     setInp({ title: '', description: '', completedTask: false });
   }
 
-  function doUpdateData(e: React.ChangeEvent<HTMLInputElement>) {
-    setResponseDataById({ ...responseDataById, [e.target.name]: e.target.value });
-  }
-
   function doCompleteTask(_id: string, flag: boolean) {
     updateData(_id, { completedTask: !flag });
+  }
+
+  function openModalWindow(_id) {
+    getByIdData(_id);
+    setOpenModal(true);
   }
 
   return (
@@ -58,7 +62,7 @@ export default function Main() {
               </div>
 
               <div className={style.iconsNoteWrapper}>
-                <img className={style.pencilImg} src={pencilImg} alt='pencilImg' onClick={() => getByIdData(el._id)} />
+                <img className={style.pencilImg} src={pencilImg} alt='pencilImg' onClick={() => openModalWindow(el._id)} />
                 <img className={style.garbageCanImg} src={garbageCanImg} alt='garbageCanImg' onClick={() => deleteData(el._id)} />
               </div>
             </div>
@@ -73,22 +77,9 @@ export default function Main() {
         </div>
       )}
 
-      <div className={style.updateWrapper}>
-        <h1>Update Note</h1>
-
-        <div className={style.updateNoteWrapper}>
-          <input type='text' placeholder='Input your note...' name='title' value={responseDataById?.title || ''} onChange={doUpdateData} />
-          <input
-            type='text'
-            placeholder='Input your description note...'
-            name='description'
-            value={responseDataById?.description || ''}
-            onChange={doUpdateData}
-          />
-          <button>cancel</button>
-          <button onClick={() => updateData(responseDataById._id, responseDataById)}>apply</button>
-        </div>
-      </div>
+      {openModal && (
+        <Modal updateData={updateData} responseDataById={responseDataById} setOpenModal={setOpenModal} setResponseDataById={setResponseDataById} />
+      )}
     </div>
   );
 }

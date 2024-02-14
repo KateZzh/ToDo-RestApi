@@ -17,7 +17,7 @@ export default function useRequestData(path: string) {
 
       setResponseGetData({ ...responseGetData, responseData: data });
     } catch (error) {
-      if (error instanceof Error) setResponseUpdateData({ ...responseUpdateData, error: error.message });
+      if (error instanceof Error) setResponseGetData({ ...responseGetData, error: error.message });
     }
   }
 
@@ -30,7 +30,7 @@ export default function useRequestData(path: string) {
       await getData();
     } catch (error) {
       if (error instanceof Error) {
-        setResponsePostData({ ...responseUpdateData, error: error.message });
+        setResponsePostData({ ...responsePostData, error: error.message });
       }
     }
   }
@@ -43,7 +43,7 @@ export default function useRequestData(path: string) {
 
       await getData();
     } catch (error) {
-      if (error instanceof Error) setResponseDeleteData({ ...responseUpdateData, error: error.message });
+      if (error instanceof Error) setResponseDeleteData({ ...responseDeleteData, error: error.message });
     }
   }
 

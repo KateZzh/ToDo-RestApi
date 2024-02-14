@@ -111,8 +111,10 @@ $black_color: #252525;
 
         .noteTitle {
           width: 85px;
+          // width: 100%;
           text-transform: uppercase;
           color: black;
+          word-wrap: break-word;
         }
 
         .noteCompleteTitle {
@@ -121,11 +123,13 @@ $black_color: #252525;
           text-decoration: line-through;
           color: black;
           opacity: 50%;
+          word-wrap: break-word;
         }
 
         .noteDescription {
-          width: 300px;
+          max-width: 300px;
           color: $light_purple_color;
+          word-wrap: break-word;
         }
       }
 
