@@ -57,8 +57,8 @@ export default function Main() {
                   alt='checkMarkImg'
                   onClick={() => doCompleteTask(el._id, el.completedTask)}
                 />
-                <p className={!el.completedTask ? style.noteTitle : style.noteCompleteTitle}>{el.title}</p>
-                <p className={style.noteDescription}>{el.description}</p>
+                <p className={!el.completedTask ? style.noteTitle : style.noteTitleComplete}>{el.title}</p>
+                <p className={!el.completedTask ? style.noteDescription : style.noteDescriptionComplete}>{el.description}</p>
               </div>
 
               <div className={style.iconsNoteWrapper}>

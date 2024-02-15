@@ -6,10 +6,10 @@ export default function useRequestData(path: string) {
   const initialState: iMyState = { responseData: [], error: '' };
 
   const [responseDataById, setResponseDataById] = useState({});
-  const [responseGetData, setResponseGetData] = useState<iMyState>(initialState);
-  const [responsePostData, setResponsePostData] = useState<iMyState>(initialState);
-  const [responseDeleteData, setResponseDeleteData] = useState<iMyState>(initialState);
-  const [responseUpdateData, setResponseUpdateData] = useState<iMyState>(initialState);
+  const [responseGetData, setResponseGetData] = useState(initialState);
+  const [responsePostData, setResponsePostData] = useState(initialState);
+  const [responseDeleteData, setResponseDeleteData] = useState(initialState);
+  const [responseUpdateData, setResponseUpdateData] = useState(initialState);
 
   async function getData() {
     try {

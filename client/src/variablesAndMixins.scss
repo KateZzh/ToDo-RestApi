@@ -1,0 +1,40 @@
+$purple_color: #6c63ff;
+$dark_purple_color: #564ef1;
+$white_color: #f7f7f7;
+$light_purple_color: #c3c1e5;
+$black_color: #252525;
+
+@mixin inp_btn($border, $border_radius, $padding) {
+  border: $border;
+  border-radius: $border_radius;
+  padding: $padding;
+}
+
+@mixin for_wrapper($margin, $max-with, $text-align) {
+  margin: $margin;
+  max-width: $max-with;
+  text-align: $text-align;
+}
+
+@mixin for_img($height, $width) {
+  height: $height;
+  width: $width;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin flex($flex-direction, $justify-content, $align-items, $gap) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  gap: $gap;
+}
+
+@mixin for_text($color, $text-transform, $width) {
+  color: $color;
+  text-transform: $text-transform;
+  width: $width;
+}
