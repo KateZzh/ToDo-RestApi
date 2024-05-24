@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "npx nodemon index"
   },
   "author": "",
   "license": "ISC",

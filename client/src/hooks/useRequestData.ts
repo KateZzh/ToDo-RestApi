@@ -1,33 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { iTaskData, iMyState } from '../interfaces';
+import { iTaskData, iMyState, iTasks } from '../interfaces';
 
 export default function useRequestData(path: string) {
   const initialState: iMyState = { responseData: [], error: '' };
 
-  const [responseDataById, setResponseDataById] = useState({});
-  const [responseGetData, setResponseGetData] = useState(initialState);
+  const [responseDataById, setResponseDataById] = useState<iTasks>({ _id: '', title: '', description: '', completedTask: false });
   const [responsePostData, setResponsePostData] = useState(initialState);
   const [responseDeleteData, setResponseDeleteData] = useState(initialState);
   const [responseUpdateData, setResponseUpdateData] = useState(initialState);
 
-  async function getData() {
-    try {
-      const { data } = await axios.get(path);
-
-      setResponseGetData({ ...responseGetData, responseData: data });
-    } catch (error) {
-      if (error instanceof Error) setResponseGetData({ ...responseGetData, error: error.message });
-    }
-  }
-
   async function createData(body: iTaskData) {
     try {
-      const data = await axios.post(path, body);
+      const data = await axios.post<iTasks>(path, body);
 
       if (data.status !== 200) throw new Error(`can't create data`);
-
-      await getData();
     } catch (error) {
       if (error instanceof Error) {
         setResponsePostData({ ...responsePostData, error: error.message });
@@ -37,11 +24,9 @@ export default function useRequestData(path: string) {
 
   async function deleteData(_id: string) {
     try {
-      const data = await axios.delete(path + _id);
+      const data = await axios.delete<iTasks>(path + _id);
 
       if (data.status !== 200) throw new Error(`can't delete data`);
-
-      await getData();
     } catch (error) {
       if (error instanceof Error) setResponseDeleteData({ ...responseDeleteData, error: error.message });
     }
@@ -49,11 +34,9 @@ export default function useRequestData(path: string) {
 
   async function updateData(_id: string, body: iTaskData) {
     try {
-      const data = await axios.put(path + _id, body);
+      const data = await axios.put<iTasks[]>(path + _id, body);
 
       if (data.status !== 200) throw new Error(`can't update data`);
-
-      await getData();
     } catch (error) {
       if (error instanceof Error) setResponseUpdateData({ ...responseUpdateData, error: error.message });
     }
@@ -71,21 +54,11 @@ export default function useRequestData(path: string) {
     }
   }
 
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return {
-    responseGetData,
-    responseDataById,
-    responsePostData,
-    responseDeleteData,
-    responseUpdateData,
-    setResponseDataById,
     createData,
     deleteData,
     updateData,
     getByIdData,
+    responseDataById,
   };
 }

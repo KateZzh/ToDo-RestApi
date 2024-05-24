@@ -8,29 +8,39 @@ import { useState } from 'react';
 import useRequestData from '../hooks/useRequestData';
 import { iTasks } from '../interfaces';
 import Modal from '../components/Modal/Modal';
+import useGetDate from '../hooks/useGetDate';
 
 export default function Main() {
   const [inp, setInp] = useState({ title: '', description: '', completedTask: false });
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const { responseGetData, createData, deleteData, updateData, getByIdData, responseDataById, setResponseDataById } =
-    useRequestData('http://localhost:3000/task/');
+  const { getData, responseGetData } = useGetDate('http://localhost:3000/task/');
+
+  const { createData, deleteData, updateData, getByIdData, responseDataById } = useRequestData('http://localhost:3000/task/');
 
   function fillInputs(e: React.ChangeEvent<HTMLInputElement>) {
     setInp({ ...inp, [e.target.name]: e.target.value });
   }
 
-  function doCreateData() {
-    createData(inp);
+  async function doCreateData() {
+    await createData(inp);
+    await getData();
+
     setInp({ title: '', description: '', completedTask: false });
   }
 
-  function doCompleteTask(_id: string, flag: boolean) {
-    updateData(_id, { completedTask: !flag });
+  async function doCompleteTask(_id: string, flag: boolean) {
+    await updateData(_id, { completedTask: !flag });
+    await getData();
   }
 
-  function openModalWindow(_id) {
-    getByIdData(_id);
+  async function doDeleteTask(_id: string) {
+    await deleteData(_id);
+    await getData();
+  }
+
+  async function openModalWindow(_id: string) {
+    await getByIdData(_id);
     setOpenModal(true);
   }
 
@@ -63,7 +73,7 @@ export default function Main() {
 
               <div className={style.iconsNoteWrapper}>
                 <img className={style.pencilImg} src={pencilImg} alt='pencilImg' onClick={() => openModalWindow(el._id)} />
-                <img className={style.garbageCanImg} src={garbageCanImg} alt='garbageCanImg' onClick={() => deleteData(el._id)} />
+                <img className={style.garbageCanImg} src={garbageCanImg} alt='garbageCanImg' onClick={() => doDeleteTask(el._id)} />
               </div>
             </div>
 
@@ -77,9 +87,7 @@ export default function Main() {
         </div>
       )}
 
-      {openModal && (
-        <Modal updateData={updateData} responseDataById={responseDataById} setOpenModal={setOpenModal} setResponseDataById={setResponseDataById} />
-      )}
+      {openModal && <Modal setOpenModal={setOpenModal} getData={getData} responseDataById={responseDataById} />}
     </div>
   );
 }

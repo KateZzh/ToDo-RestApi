@@ -1,12 +1,27 @@
 import style from './Modal.style.module.scss';
+import { iTasks } from '../../interfaces/index';
+import useRequestData from '../../hooks/useRequestData';
+import { useState } from 'react';
 
-export default function Modal({ setOpenModal, responseDataById, setResponseDataById, updateData }) {
-  function doUpdateData(e: React.ChangeEvent<HTMLInputElement>) {
-    setResponseDataById({ ...responseDataById, [e.target.name]: e.target.value });
+interface iProps {
+  setOpenModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+  responseDataById: iTasks;
+  getData: () => Promise<void>;
+}
+
+export default function Modal({ responseDataById, setOpenModal, getData }: iProps) {
+  const [inp, setInp] = useState({ title: responseDataById.title || '', description: responseDataById.description || '', completedTask: false });
+
+  const { updateData } = useRequestData('http://localhost:3000/task/');
+
+  function fillInputs(e: React.ChangeEvent<HTMLInputElement>) {
+    setInp({ ...inp, [e.target.name]: e.target.value });
   }
 
   async function doUpdateAndClose() {
-    await updateData(responseDataById._id, responseDataById);
+    await updateData(responseDataById._id, inp);
+    await getData();
+
     setOpenModal(false);
   }
 
@@ -16,14 +31,8 @@ export default function Modal({ setOpenModal, responseDataById, setResponseDataB
         <h1>Update Note</h1>
 
         <div className={style.updateNoteWrapper}>
-          <input type='text' placeholder='Input your note...' name='title' value={responseDataById?.title || ''} onChange={doUpdateData} />
-          <input
-            type='text'
-            placeholder='Input your description note...'
-            name='description'
-            value={responseDataById?.description || ''}
-            onChange={doUpdateData}
-          />
+          <input type='text' placeholder='Input your note...' name='title' value={inp.title} onChange={fillInputs} />
+          <input type='text' placeholder='Input your description note...' name='description' value={inp.description} onChange={fillInputs} />
           <div className={style.buttonsWrapper}>
             <button className={style.cancelButton} onClick={() => setOpenModal(false)}>
               cancel
