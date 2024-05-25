@@ -6,9 +6,10 @@ import pencilImg from '../assets/pencil.svg';
 import garbageCanImg from '../assets/garbageCan.svg';
 import { useState } from 'react';
 import useRequestData from '../hooks/useRequestData';
-import { iTasks } from '../interfaces';
-import Modal from '../components/Modal/Modal';
 import useGetDate from '../hooks/useGetDate';
+import { iTasks, iArrayInp } from '../interfaces';
+import Modal from '../components/Modal/Modal';
+import Input from '../components/Input/Input';
 
 export default function Main() {
   const [inp, setInp] = useState({ title: '', description: '', completedTask: false });
@@ -18,9 +19,10 @@ export default function Main() {
 
   const { createData, deleteData, updateData, getByIdData, responseDataById } = useRequestData('http://localhost:3000/task/');
 
-  function fillInputs(e: React.ChangeEvent<HTMLInputElement>) {
-    setInp({ ...inp, [e.target.name]: e.target.value });
-  }
+  const arrayInp: iArrayInp[] = [
+    { name: 'title', placeholder: 'Create note...' },
+    { name: 'description', placeholder: 'Create description note...' },
+  ];
 
   async function doCreateData() {
     await createData(inp);
@@ -50,8 +52,8 @@ export default function Main() {
         <h1>TODO LIST</h1>
 
         <div className={style.createNoteWrapper}>
-          <input type='text' placeholder='Create note...' name='title' value={inp.title} onChange={fillInputs} />
-          <input type='text' placeholder='Create description note...' name='description' value={inp.description} onChange={fillInputs} />
+          <Input inp={inp} setInp={setInp} arrayInp={arrayInp} />
+
           <button onClick={doCreateData}>create</button>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import style from './Modal.style.module.scss';
-import { iTasks } from '../../interfaces/index';
-import useRequestData from '../../hooks/useRequestData';
+import { iTasks, iArrayInp } from '../../interfaces/index';
 import { useState } from 'react';
+import useRequestData from '../../hooks/useRequestData';
+import Input from '../Input/Input';
 
 interface iProps {
   setOpenModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
@@ -14,9 +15,10 @@ export default function Modal({ responseDataById, setOpenModal, getData }: iProp
 
   const { updateData } = useRequestData('http://localhost:3000/task/');
 
-  function fillInputs(e: React.ChangeEvent<HTMLInputElement>) {
-    setInp({ ...inp, [e.target.name]: e.target.value });
-  }
+  const arrayInp: iArrayInp[] = [
+    { name: 'title', placeholder: 'Input your note...' },
+    { name: 'description', placeholder: 'Input your description note...' },
+  ];
 
   async function doUpdateAndClose() {
     await updateData(responseDataById._id, inp);
@@ -31,8 +33,8 @@ export default function Modal({ responseDataById, setOpenModal, getData }: iProp
         <h1>Update Note</h1>
 
         <div className={style.updateNoteWrapper}>
-          <input type='text' placeholder='Input your note...' name='title' value={inp.title} onChange={fillInputs} />
-          <input type='text' placeholder='Input your description note...' name='description' value={inp.description} onChange={fillInputs} />
+          <Input inp={inp} setInp={setInp} arrayInp={arrayInp} />
+
           <div className={style.buttonsWrapper}>
             <button className={style.cancelButton} onClick={() => setOpenModal(false)}>
               cancel
